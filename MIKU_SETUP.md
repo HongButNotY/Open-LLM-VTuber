@@ -23,6 +23,9 @@ Server (this repo):
 Desktop app ([companion fork](https://github.com/HongButNotY/Open-LLM-VTuber-Web/tree/miku-desktop-pet)):
 - **Speaks up on her own at random times** (30 s to 8 min) while screen capture is on, with a fresh screenshot each time.
 - **Small subtitle under her in pet mode**, following her when dragged (toggle in Settings → General).
+- **Voice volume, mic on/off at startup, and a saved pet-mode size** (Settings → General and ASR; scrolling on her in pet mode saves her size).
+- **Reliable pet-mode click-through**: clicks pass through empty space but not her or open panels.
+  "Click Through Everything" (tray or right-click menu) can be switched off with ⌥⇧⌘M.
 - **Electron 45**: the prebuilt v1.2.1 app (Electron 31) is blocked by macOS as "malware" because Apple
   revoked that Electron runtime; building on Electron 45 fixes it.
 
