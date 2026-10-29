@@ -22,7 +22,11 @@ class TTSFactory:
         elif engine_type == "edge_tts":
             from .edge_tts import TTSEngine as EdgeTTSEngine
 
-            return EdgeTTSEngine(kwargs.get("voice"))
+            return EdgeTTSEngine(
+                kwargs.get("voice"),
+                pitch=kwargs.get("pitch", "+0Hz"),
+                rate=kwargs.get("rate", "+0%"),
+            )
         elif engine_type == "pyttsx3_tts":
             from .pyttsx3_tts import TTSEngine as Pyttsx3TTSEngine
 
@@ -210,6 +214,17 @@ class TTSFactory:
                 volume=kwargs.get("volume"),
                 normalize_audio=kwargs.get("normalize_audio"),
                 use_cuda=kwargs.get("use_cuda"),
+            )
+        elif engine_type == "voicevox_tts":
+            from .voicevox_tts import TTSEngine as VoicevoxTTSEngine
+
+            return VoicevoxTTSEngine(
+                base_url=kwargs.get("base_url", "http://127.0.0.1:50021"),
+                speaker_id=kwargs.get("speaker_id", 8),
+                speed_scale=kwargs.get("speed_scale", 1.0),
+                pitch_scale=kwargs.get("pitch_scale", 0.0),
+                intonation_scale=kwargs.get("intonation_scale", 1.0),
+                volume_scale=kwargs.get("volume_scale", 1.0),
             )
         else:
             raise ValueError(f"Unknown TTS engine type: {engine_type}")

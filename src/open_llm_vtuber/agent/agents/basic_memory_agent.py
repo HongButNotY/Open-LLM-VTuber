@@ -1,3 +1,4 @@
+import os
 from typing import (
     AsyncIterator,
     List,
@@ -241,13 +242,23 @@ class BasicMemoryAgent(AgentInterface):
 
     def _to_messages(self, input_data: BatchInput) -> List[Dict[str, Any]]:
         """Prepare messages for LLM API call."""
-        messages = self._memory.copy()
+        # Only send the most recent messages to save API cost; the full history
+        # is still saved on disk. Set MAX_MEMORY_MESSAGES=0 to send everything.
+        max_messages = int(os.getenv("MAX_MEMORY_MESSAGES", "30"))
+        messages = self._memory[-max_messages:] if max_messages > 0 else self._memory.copy()
+        while messages and messages[0]["role"] != "user":
+            messages.pop(0)
         user_content = []
         text_prompt = self._to_text_prompt(input_data)
         if text_prompt:
             user_content.append({"type": "text", "text": text_prompt})
 
-        if input_data.images:
+        # LLM_VISION=false drops screenshots for models that can't read images.
+        if input_data.images and os.getenv("LLM_VISION", "true").lower() == "false":
+            user_content.append(
+                {"type": "text", "text": "[A screenshot was shared, but you can't see images right now.]"}
+            )
+        elif input_data.images:
             image_added = False
             for img_data in input_data.images:
                 if isinstance(img_data.data, str) and img_data.data.startswith(

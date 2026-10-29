@@ -1,3 +1,5 @@
+> **Fork note:** this is HongButNotY's Miku desktop-pet fork of Open-LLM-VTuber. See [MIKU_SETUP.md](MIKU_SETUP.md) for what it adds, setup steps and credits. The original project is at [Open-LLM-VTuber/Open-LLM-VTuber](https://github.com/Open-LLM-VTuber/Open-LLM-VTuber).
+
 ![](./assets/banner.jpg)
 
 <h1 align="center">Open-LLM-VTuber</h1>

@@ -26,5 +26,28 @@
                 "": 1
             }
         }
+    },
+    {
+        "name": "miku",
+        "description": "Hatsune Miku, Live2D official sample (PRO). Illustration (c) Crypton Future Media, modeling Live2D Inc. Piapro Character License.",
+        "url": "/live2d-models/miku/runtime/miku_sample_t04.model3.json",
+        "kScale": 0.5,
+        "initialXshift": 0,
+        "initialYshift": 0,
+        "kXOffset": 1150,
+        "idleMotionGroupName": "Idle",
+        "defaultEmotion": "neutral",
+        "emotionMap": {
+            "neutral": "neutral",
+            "joy": "joy",
+            "smirk": "smirk",
+            "surprise": "surprise",
+            "sadness": "sadness",
+            "anger": "anger",
+            "fear": "fear",
+            "disgust": "disgust",
+            "shy": "shy"
+        },
+        "tapMotions": {}
     }
 ]
