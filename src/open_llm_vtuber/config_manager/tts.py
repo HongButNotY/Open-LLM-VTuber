@@ -151,6 +151,8 @@ class EdgeTTSConfig(I18nMixin):
     """Configuration for Edge TTS."""
 
     voice: str = Field(..., alias="voice")
+    pitch: str = Field("+0Hz", alias="pitch")
+    rate: str = Field("+0%", alias="rate")
 
     DESCRIPTIONS: ClassVar[Dict[str, Description]] = {
         "voice": Description(
@@ -538,6 +540,26 @@ class MinimaxTTSConfig(I18nMixin):
     }
 
 
+class VoicevoxTTSConfig(I18nMixin):
+    """Configuration for VOICEVOX TTS (local engine)."""
+
+    base_url: str = Field("http://127.0.0.1:50021", alias="base_url")
+    speaker_id: int = Field(3, alias="speaker_id")
+    speed_scale: float = Field(1.0, alias="speed_scale")
+    pitch_scale: float = Field(0.0, alias="pitch_scale")
+    intonation_scale: float = Field(1.0, alias="intonation_scale")
+    volume_scale: float = Field(1.0, alias="volume_scale")
+
+    DESCRIPTIONS: ClassVar[Dict[str, Description]] = {
+        "base_url": Description(en="URL of the running VOICEVOX engine", zh="VOICEVOX 引擎地址"),
+        "speaker_id": Description(en="VOICEVOX style ID (see /speakers)", zh="VOICEVOX 风格 ID"),
+        "speed_scale": Description(en="Speaking speed (1.0 = normal)", zh="语速"),
+        "pitch_scale": Description(en="Pitch shift (0.0 = normal, about -0.15 to 0.15)", zh="音高"),
+        "intonation_scale": Description(en="Intonation strength (1.0 = normal)", zh="抑扬"),
+        "volume_scale": Description(en="Volume (1.0 = normal)", zh="音量"),
+    }
+
+
 class PiperTTSConfig(I18nMixin):
     """Configuration for Piper TTS."""
 
@@ -702,6 +724,7 @@ class TTSConfig(I18nMixin):
         "elevenlabs_tts",
         "cartesia_tts",
         "piper_tts",
+        "voicevox_tts",
     ] = Field(..., alias="tts_model")
 
     azure_tts: Optional[AzureTTSConfig] = Field(None, alias="azure_tts")
@@ -726,6 +749,7 @@ class TTSConfig(I18nMixin):
     elevenlabs_tts: ElevenLabsTTSConfig | None = Field(None, alias="elevenlabs_tts")
     cartesia_tts: CartesiaTTSConfig | None = Field(None, alias="cartesia_tts")
     piper_tts: Optional[PiperTTSConfig] = Field(None, alias="piper_tts")
+    voicevox_tts: Optional[VoicevoxTTSConfig] = Field(None, alias="voicevox_tts")
 
     DESCRIPTIONS: ClassVar[Dict[str, Description]] = {
         "tts_model": Description(
@@ -769,6 +793,7 @@ class TTSConfig(I18nMixin):
             en="Configuration for Cartesia TTS", zh="Cartesia TTS 配置"
         ),
         "piper_tts": Description(en="Configuration for Piper TTS", zh="Piper TTS 配置"),
+        "voicevox_tts": Description(en="Configuration for VOICEVOX TTS", zh="VOICEVOX TTS 配置"),
     }
 
     @model_validator(mode="after")
